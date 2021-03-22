@@ -1,0 +1,3 @@
+include ':MateriallSDK'
+include ':app'
+rootProject.name = "NetworkConnection"

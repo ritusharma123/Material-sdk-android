@@ -1,0 +1,161 @@
+# compiler: R8
+# compiler_version: 2.1.86
+# pg_map_id: dd8ff3d
+# common_typos_disable
+com.networkconnection.networkconnection.BuildConfig -> com.networkconnection.networkconnection.BuildConfig:
+    1:1:void <init>():6:6 -> <init>
+com.networkconnection.networkconnection.MaterialSearchApiCalls -> com.networkconnection.networkconnection.MaterialSearchApiCalls:
+    java.lang.String phoneNumber -> a
+    1:3:void <init>(android.content.Context):24:26 -> <init>
+    4:6:void <init>(android.content.Context,android.util.AttributeSet):30:32 -> <init>
+    1:1:void initialize(android.content.Context):37:37 -> a
+    2:6:void RetrofitHitUrl(java.lang.String):42:46 -> a
+com.networkconnection.networkconnection.MaterialSearchApiCalls$1 -> com.networkconnection.networkconnection.MaterialSearchApiCalls$a:
+    com.networkconnection.networkconnection.MaterialSearchApiCalls this$0 -> a
+    1:1:void <init>(com.networkconnection.networkconnection.MaterialSearchApiCalls):46:46 -> <init>
+    1:1:void onFailure(retrofit2.Call,java.lang.Throwable):70:70 -> onFailure
+    1:12:void onResponse(retrofit2.Call,retrofit2.Response):49:60 -> onResponse
+com.networkconnection.networkconnection.Retroclient -> com.networkconnection.networkconnection.Retroclient:
+    1:1:void <init>():12:12 -> <init>
+    1:13:retrofit2.Retrofit getClient():20:32 -> getClient
+com.networkconnection.networkconnection.model.materiall.materiallRequest.Data -> com.networkconnection.networkconnection.model.materiall.materiallRequest.Data:
+    java.lang.String countrycode -> a
+    java.lang.String mobile -> b
+    1:3:void <init>(java.lang.String,java.lang.String):9:11 -> <init>
+    1:1:java.lang.String getCountryCode():16:16 -> getCountryCode
+    1:1:java.lang.String getMobile():26:26 -> getMobile
+    1:1:void setCountryCode(java.lang.String):21:21 -> setCountryCode
+    1:1:void setMobile(java.lang.String):31:31 -> setMobile
+    1:1:java.lang.String toString():37:37 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallRequest.Json -> com.networkconnection.networkconnection.model.materiall.materiallRequest.Json:
+    com.networkconnection.networkconnection.model.materiall.materiallRequest.Request request -> a
+    1:2:void <init>(com.networkconnection.networkconnection.model.materiall.materiallRequest.Request):7:8 -> <init>
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallRequest.Request getRequest():13:13 -> getRequest
+    1:1:void setRequest(com.networkconnection.networkconnection.model.materiall.materiallRequest.Request):18:18 -> setRequest
+    1:1:java.lang.String toString():24:24 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallRequest.OtpRequest -> com.networkconnection.networkconnection.model.materiall.materiallRequest.OtpRequest:
+    com.networkconnection.networkconnection.model.materiall.materiallRequest.Json json -> a
+    1:2:void <init>(com.networkconnection.networkconnection.model.materiall.materiallRequest.Json):8:9 -> <init>
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallRequest.Json getJson():14:14 -> getJson
+    1:1:void setJson(com.networkconnection.networkconnection.model.materiall.materiallRequest.Json):19:19 -> setJson
+    1:1:java.lang.String toString():25:25 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallRequest.Request -> com.networkconnection.networkconnection.model.materiall.materiallRequest.Request:
+    com.networkconnection.networkconnection.model.materiall.materiallRequest.Data data -> c
+    java.lang.String servicetype -> a
+    java.lang.String functiontype -> b
+    1:5:void <init>(java.lang.String,java.lang.String,com.networkconnection.networkconnection.model.materiall.materiallRequest.Data):10:14 -> <init>
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallRequest.Data getData():20:20 -> getData
+    1:1:void setData(com.networkconnection.networkconnection.model.materiall.materiallRequest.Data):25:25 -> setData
+    1:1:java.lang.String toString():31:31 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallResponse.Data -> com.networkconnection.networkconnection.model.materiall.materiallResponse.Data:
+    java.lang.String searchTerm -> a
+    java.lang.String ageRestricted -> b
+    1:1:void <init>():3:3 -> <init>
+    1:1:java.lang.String getAgeRestricted():17:17 -> getAgeRestricted
+    1:1:java.lang.String getSearchTerm():9:9 -> getSearchTerm
+    1:1:void setAgeRestricted(java.lang.String):21:21 -> setAgeRestricted
+    1:1:void setSearchTerm(java.lang.String):13:13 -> setSearchTerm
+    1:1:java.lang.String toString():27:27 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallResponse.Json -> com.networkconnection.networkconnection.model.materiall.materiallResponse.Json:
+    com.networkconnection.networkconnection.model.materiall.materiallResponse.Response response -> a
+    1:1:void <init>():4:4 -> <init>
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallResponse.Response getResponse():10:10 -> getResponse
+    1:1:void setResponse(com.networkconnection.networkconnection.model.materiall.materiallResponse.Response):15:15 -> setResponse
+    1:1:java.lang.String toString():21:21 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallResponse.OtpResponse -> com.networkconnection.networkconnection.model.materiall.materiallResponse.OtpResponse:
+    com.networkconnection.networkconnection.model.materiall.materiallResponse.Data data -> c
+    java.lang.String status -> b
+    int code -> a
+    1:1:void <init>():3:3 -> <init>
+    1:1:int getCode():10:10 -> getCode
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallResponse.Data getData():26:26 -> getData
+    1:1:java.lang.String getStatus():18:18 -> getStatus
+    1:1:void setCode(int):14:14 -> setCode
+    1:1:void setData(com.networkconnection.networkconnection.model.materiall.materiallResponse.Data):30:30 -> setData
+    1:1:void setStatus(java.lang.String):22:22 -> setStatus
+    1:1:java.lang.String toString():36:36 -> toString
+com.networkconnection.networkconnection.model.materiall.materiallResponse.Response -> com.networkconnection.networkconnection.model.materiall.materiallResponse.Response:
+    com.networkconnection.networkconnection.model.materiall.materiallResponse.Data data -> a
+    java.lang.String functiontype -> c
+    java.lang.String servicetype -> b
+    java.lang.String statuscode -> e
+    java.lang.String statusmessage -> d
+    1:1:void <init>():4:4 -> <init>
+    1:1:com.networkconnection.networkconnection.model.materiall.materiallResponse.Data getData():53:53 -> getData
+    1:1:java.lang.String getFunctiontype():24:24 -> getFunctiontype
+    1:1:java.lang.String getServicetype():16:16 -> getServicetype
+    1:1:java.lang.String getStatuscode():44:44 -> getStatuscode
+    1:1:java.lang.String getStatusmessage():34:34 -> getStatusmessage
+    1:1:void setData(com.networkconnection.networkconnection.model.materiall.materiallResponse.Data):58:58 -> setData
+    1:1:void setFunctiontype(java.lang.String):28:28 -> setFunctiontype
+    1:1:void setServicetype(java.lang.String):20:20 -> setServicetype
+    1:1:void setStatuscode(java.lang.String):48:48 -> setStatuscode
+    1:1:void setStatusmessage(java.lang.String):38:38 -> setStatusmessage
+    1:1:java.lang.String toString():68:68 -> toString
+com.networkconnection.networkconnection.model.hello -> com.networkconnection.networkconnection.model.hello:
+    1:1:void <init>():3:3 -> <init>
+com.networkconnection.networkconnection.model.otp.otprequest.Data -> com.networkconnection.networkconnection.model.otp.otprequest.Data:
+    java.lang.String countrycode -> a
+    java.lang.String mobile -> b
+    1:3:void <init>(java.lang.String,java.lang.String):9:11 -> <init>
+    1:1:java.lang.String getCountryCode():16:16 -> getCountryCode
+    1:1:java.lang.String getMobile():26:26 -> getMobile
+    1:1:void setCountryCode(java.lang.String):21:21 -> setCountryCode
+    1:1:void setMobile(java.lang.String):31:31 -> setMobile
+    1:1:java.lang.String toString():37:37 -> toString
+com.networkconnection.networkconnection.model.otp.otprequest.Json -> com.networkconnection.networkconnection.model.otp.otprequest.Json:
+    com.networkconnection.networkconnection.model.otp.otprequest.Request request -> a
+    1:2:void <init>(com.networkconnection.networkconnection.model.otp.otprequest.Request):7:8 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otprequest.Request getRequest():13:13 -> getRequest
+    1:1:void setRequest(com.networkconnection.networkconnection.model.otp.otprequest.Request):18:18 -> setRequest
+    1:1:java.lang.String toString():24:24 -> toString
+com.networkconnection.networkconnection.model.otp.otprequest.OtpRequest -> com.networkconnection.networkconnection.model.otp.otprequest.OtpRequest:
+    com.networkconnection.networkconnection.model.otp.otprequest.Json json -> a
+    1:2:void <init>(com.networkconnection.networkconnection.model.otp.otprequest.Json):8:9 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otprequest.Json getJson():14:14 -> getJson
+    1:1:void setJson(com.networkconnection.networkconnection.model.otp.otprequest.Json):19:19 -> setJson
+    1:1:java.lang.String toString():25:25 -> toString
+com.networkconnection.networkconnection.model.otp.otprequest.Request -> com.networkconnection.networkconnection.model.otp.otprequest.Request:
+    com.networkconnection.networkconnection.model.otp.otprequest.Data data -> c
+    java.lang.String servicetype -> a
+    java.lang.String functiontype -> b
+    1:5:void <init>(java.lang.String,java.lang.String,com.networkconnection.networkconnection.model.otp.otprequest.Data):10:14 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otprequest.Data getData():20:20 -> getData
+    1:1:void setData(com.networkconnection.networkconnection.model.otp.otprequest.Data):25:25 -> setData
+    1:1:java.lang.String toString():31:31 -> toString
+com.networkconnection.networkconnection.model.otp.otpresponse.Data -> com.networkconnection.networkconnection.model.otp.otpresponse.Data:
+    java.lang.String sessionid -> a
+    1:1:void <init>():3:3 -> <init>
+    1:1:java.lang.String getSessionid():8:8 -> getSessionid
+    1:1:void setSessionid(java.lang.String):12:12 -> setSessionid
+    1:1:java.lang.String toString():18:18 -> toString
+com.networkconnection.networkconnection.model.otp.otpresponse.Json -> com.networkconnection.networkconnection.model.otp.otpresponse.Json:
+    com.networkconnection.networkconnection.model.otp.otpresponse.Response response -> a
+    1:1:void <init>():4:4 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otpresponse.Response getResponse():10:10 -> getResponse
+    1:1:void setResponse(com.networkconnection.networkconnection.model.otp.otpresponse.Response):15:15 -> setResponse
+    1:1:java.lang.String toString():21:21 -> toString
+com.networkconnection.networkconnection.model.otp.otpresponse.OtpResponse -> com.networkconnection.networkconnection.model.otp.otpresponse.OtpResponse:
+    com.networkconnection.networkconnection.model.otp.otpresponse.Json json -> a
+    1:1:void <init>():3:3 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otpresponse.Json getJson():9:9 -> getJson
+    1:1:void setJson(com.networkconnection.networkconnection.model.otp.otpresponse.Json):14:14 -> setJson
+    1:1:java.lang.String toString():20:20 -> toString
+com.networkconnection.networkconnection.model.otp.otpresponse.Response -> com.networkconnection.networkconnection.model.otp.otpresponse.Response:
+    com.networkconnection.networkconnection.model.otp.otpresponse.Data data -> a
+    java.lang.String functiontype -> c
+    java.lang.String servicetype -> b
+    java.lang.String statuscode -> e
+    java.lang.String statusmessage -> d
+    1:1:void <init>():4:4 -> <init>
+    1:1:com.networkconnection.networkconnection.model.otp.otpresponse.Data getData():53:53 -> getData
+    1:1:java.lang.String getFunctiontype():24:24 -> getFunctiontype
+    1:1:java.lang.String getServicetype():16:16 -> getServicetype
+    1:1:java.lang.String getStatuscode():44:44 -> getStatuscode
+    1:1:java.lang.String getStatusmessage():34:34 -> getStatusmessage
+    1:1:void setData(com.networkconnection.networkconnection.model.otp.otpresponse.Data):58:58 -> setData
+    1:1:void setFunctiontype(java.lang.String):28:28 -> setFunctiontype
+    1:1:void setServicetype(java.lang.String):20:20 -> setServicetype
+    1:1:void setStatuscode(java.lang.String):48:48 -> setStatuscode
+    1:1:void setStatusmessage(java.lang.String):38:38 -> setStatusmessage
+    1:1:java.lang.String toString():68:68 -> toString

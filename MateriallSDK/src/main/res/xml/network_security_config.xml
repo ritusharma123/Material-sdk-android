@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">qa1.astronethra.in</domain>
+        <domain includeSubdomains="true">qa1.astronethra.com</domain>
+        <domain includeSubdomains="true">web.astronethra.in</domain>
+        <domain includeSubdomains="true">web.astronethra.com</domain>
+
+    </domain-config>
+
+</network-security-config>

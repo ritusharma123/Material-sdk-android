@@ -1,7 +1,9 @@
 plugins {
     id 'com.android.library'
+    id 'com.github.dcendents.android-maven'
 }
-
+group='com.networkconnection.libraries'
+version='1.0'
 
 
 android {
@@ -37,9 +39,14 @@ android {
     }
 }
 
+configurations {
+    includeJars // define new configuration
+}
+
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.3.0'
+    includeJars(name:'third_party_legacy_do_not_touch', ext:'jar') // the needed JAR(s) is/are here
 //    implementation project(path: ':app')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -50,8 +57,27 @@ dependencies {
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 }
 
-//apply from: 'bintray.script'
+//
+//project.afterEvaluate {
+//    def isAndroidLibraryProject = project.plugins.hasPlugin('com.android.library')
+//    if(isAndroidLibraryProject) {
+//        task copyDeps(type:Copy) {
+//            from configurations.includeJars {
+//                include '**/*.jar'
+//            }
+//            into "./build/intermediates/packaged-classes/release/libs" // this folder gets packaged inside the AAR
+//        }
+//        mergeReleaseJniLibFolders.dependsOn copyDeps // only this stage worked for me - neither earlier, nor later
+//
+//        task copyDebugDeps(type:Copy) {
+//            from configurations.includeJars {
+//                include '**/*.jar'
+//            }
+//            into "./build/intermediates/packaged-classes/debug/libs"
+//        }
+//        //mergeDebugJniLibFolders.dependsOn copyDebugDeps
+//    }
+//}

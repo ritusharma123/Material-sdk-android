@@ -2,49 +2,31 @@ package com.curiosearch.materiall;
 
 import android.os.AsyncTask;
 
-import com.curiosearch.materiall.model.EventModel;
-import com.curiosearch.materiall.model.products;
+import com.curiosearch.materiall.service.Config;
 import com.google.gson.Gson;
 import com.curiosearch.materiall.service.materiall;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
-
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ProductRecommendationSearch {
-    public static boolean materiall = true;
-    public static String template = "";
-    public static String sortBy = "";
-    public static String sessionId = "";
-    public static String filter = "";
-    public static int count = -1;
-    public static int page = -1;
-    public static JSONObject result_json_Obj;
-    public static String responseStr;
-    public static Retroclient retroclient;
-    public static materiall service;
-    public static Call call;
-
-
-
-    public String getFilter() {
-        return filter;
-    }
-
-    public void setFilter(String filter) {
-        this.filter = filter;
-    }
+    private boolean materiall = true;
+    private String template = "";
+    private String sortBy = "";
+    private String filter = "";
+    private int count = -1;
+    private int page = -1;
+    private String sessionId = "";
 
     public boolean isMateriall() {
         return materiall;
@@ -52,6 +34,30 @@ public class ProductRecommendationSearch {
 
     public void setMateriall(boolean materiall) {
         this.materiall = materiall;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public String getFilter() {
+        return filter;
+    }
+
+    public void setFilter(String filter) {
+        this.filter = filter;
     }
 
     public String getTemplate() {
@@ -70,14 +76,6 @@ public class ProductRecommendationSearch {
         this.sortBy = sortBy;
     }
 
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
     public int getCount() {
         return count;
     }
@@ -86,262 +84,189 @@ public class ProductRecommendationSearch {
         this.count = count;
     }
 
+    //////////////////////ProductCategory API INTERFACE////////////
 
-    public static class RetrofitAyncProduct extends AsyncTask<Void, Void, Response> {
-        String clientId, userId, categoryId;
+    public JSONObject getRecommendedProductCategory(String clientId, String userId, String categoryId) throws Exception{
+        JSONObject response = null;
+        try {
+            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId +
+                    "&categoryId=" + categoryId;
 
-
-
-        public RetrofitAyncProduct(String clientId, String userId, String categoryId) {
-            this.clientId = clientId;
-            this.userId = userId;
-            this.categoryId = categoryId;
-        }
-
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Response doInBackground(Void... params) {
-            Response responsee = null;
-            retroclient = new Retroclient();
-            service = retroclient.getClient().create(materiall.class);
-            try {
-                System.out.println("search_Response  1st: " + "  do background ");
-//                if(count == -1){
-//                    call = service.materiallInterface(clientId, userId, sessionId, categoryId,page, materiall, template, sortBy);
-//                }
-
-//                URL url = new URL("http://demo.materiall.com/");
-//                HttpsURLConnection urlConnection = (HttpsURLConnection) url.openConnection();
-//                urlConnection.setRequestMethod("GET");   //POST or GET
-//                urlConnection.connect();
-//                JSONObject jsonRequest = new JSONObject();
-//                try {
-//                    jsonRequest.put("clientId", "test123@gmail.com");
-//                    jsonRequest.put("userId", "123456");
-////                    if(sessionId!=null){
-//                        jsonRequest.put("sessionId", "1111111111");
-////                    }
-//                    jsonRequest.put("categoryId", "1111111111");
-//                    jsonRequest.put("count", "1111111111");
-//                    jsonRequest.put("page", "1111111111");
-//                    jsonRequest.put("materiall", "1111111111");
-//                    jsonRequest.put("template", "1111111111");
-//                    jsonRequest.put("sortBy", "1111111111");
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
-//                // Write Request to output stream to server.
-//                OutputStreamWriter out = new OutputStreamWriter(urlConnection.getOutputStream());
-//                out.write(jsonRequest.toString());
-//                out.close();
-//
-//                String string = new String();
-//
-//                InputStream responseString = urlConnection.getInputStream();
-//                System.out.println("search_Response  : responseString: 2nd: " + "   " + responseString);
-                if (count != -1 && page != -1 && template != "" && sortBy != "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, count, page, materiall, template, sortBy, filter);
-                } else if (count != -1 && page == -1 && template != "" && sortBy != "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, count, null, materiall, template, sortBy, filter);
-                } else if (count == -1 && page != -1 && template != "" && sortBy != "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, null, page, materiall, template, sortBy, filter);
-                } else if (count == -1 && page == -1 && template != "" && sortBy != "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, null, null, materiall, template, sortBy, filter);
-                } else if (count != -1 && page != -1 && template == "" && sortBy != "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, count, page, materiall, null, sortBy, filter);
-                } else if (count != -1 && page != -1 && template != "" && sortBy == "" && filter!="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, count, page, materiall, template, null, filter);
-                } else if (count != -1 && page != -1 && template != "" && sortBy != "" && filter =="") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, count, page, materiall, template, sortBy, null);
-                }
-                else if (count == -1 && page == -1 && template == "" && sortBy == "" && filter == "") {
-                    call = service.materiallInterface(clientId, userId, sessionId, categoryId, null, null, materiall, null, null, null);
-                }
-
-                responsee = call.execute();
-                System.out.println("search_Response  :2nd: " + "   " + responsee);
-                responseStr = new Gson().toJson(responsee.body());
-//                }
-                try {
-                    result_json_Obj = new JSONObject(responseStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("search_Response result :  " + result_json_Obj);
-                return responsee;
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (count != -1) {
+                url = url + "&count=" + count;
             }
-            return null;
-        }
+            if (page != -1) {
+                url = url + "&page=" + page;
+            }
+            if (sessionId != "") {
+                url = url + "&sessionId=" + sessionId;
+            }
+            if (sortBy != "") {
+                url = url + "&sortBy=" + sortBy;
+            }
+            if (template != "") {
+                url = url + "&template=" + template;
+            }
 
-        @Override
-        protected void onPostExecute(Response result) {
-            super.onPostExecute(result);
+                url = url + "&material=" + materiall;
+
+            if (filter != "") {
+                url = url + "&filter=" + filter;
+            }
+
+            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
+            System.out.println("response:   " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
+        return response;
+    }
+
+    //////////////////////ProductSearch API INTERFACE////////////
+
+    public JSONObject getRecommendedProductSearch(String clientId, String userId, String searchq, int page) {
+        JSONObject response = null;
+
+        try {
+            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId + "&searchq=" + searchq +
+                    "&page=" + page;
+            if (count != -1) {
+                url = url + "&count=" + count;
+            }
+            if (sortBy != "") {
+                url = url + "&sortBy=" + sortBy;
+            }
+            if (template != "") {
+                url = url + "&template=" + template;
+            }
+            if (filter != "") {
+                url = url + "&filter=" + filter;
+            }
+
+            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
+            System.out.println("response:   " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
 
-    public static class RetrofitAyncSearchq extends AsyncTask<Void, Void, Response> {
-        String clientId, searchq, userId;
-        int page;
+    //////////////////////SimilarProducts API INTERFACE////////////
 
-        public RetrofitAyncSearchq(String clientId, String userId, String searchq, int page) {
-            this.clientId = clientId;
-            this.userId = userId;
-            this.searchq = searchq;
-            this.page = page;
-        }
-
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Response doInBackground(Void... params) {
-            Response responsee = null;
-            retroclient = new Retroclient();
-            service = retroclient.getClient().create(materiall.class);
-            try {
-                System.out.println("search_Response_Searchq  1st: " + "  do background ");
-                if (count != -1 && sortBy != "") {
-                    call = service.SearchqInterface(clientId, userId, searchq, count, page, sortBy);
-                } else if (count != -1 && sortBy == "") {
-                    call = service.SearchqInterface(clientId, userId, searchq, count, page, null);
-                } else if (count == -1 && sortBy != "") {
-                    call = service.SearchqInterface(clientId, userId, searchq, null, page, sortBy);
-                } else if (count == -1 && sortBy == "") {
-                    call = service.SearchqInterface(clientId, userId, searchq, null, page, null);
-                }
-                responsee = call.execute();
-                System.out.println("search_Response_Searchq  :2nd: " + "   " + responsee);
-
-                responseStr = new Gson().toJson(responsee.body());
-                try {
-                    result_json_Obj = new JSONObject(responseStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("search_Response result :  " + result_json_Obj);
-                return responsee;
-            } catch (IOException e) {
-                e.printStackTrace();
+    public JSONObject getRecommendedSimilarProducts(String productId, String clientId, String categoryId, String userId) {
+        JSONObject response = null;
+        try {
+            String url = Config.BaseUrl + "api/product/" + productId + "/similar/recommendations?&clientId=" + clientId + "&userId=" + userId +
+                    "&categoryId=" + categoryId;
+            if (count != -1) {
+                url = url + "&count=" + count;
             }
-            return null;
+            if (page != -1) {
+                url = url + "&page=" + page;
+            }
+            if (sessionId != "") {
+                url = url + "&sessionId=" + sessionId;
+            }
+            if (template != "") {
+                url = url + "&template=" + template;
+            }
+            if (filter != "") {
+                url = url + "&filter=" + filter;
+            }
+
+            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
+            System.out.println("response:   " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
-        @Override
-        protected void onPostExecute(Response result) {
-            super.onPostExecute(result);
+        return response;
+    }
+
+    //////////////////////RecordUserActions API INTERFACE////////////
+
+    public JSONObject getRecordUserActions(String userId, String clientId, String sessionId, String categoryId, String type, JSONObject productList) {
+        JSONObject response = null;
+        try {
+            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&clientId=" + clientId + "&sessionId=" + sessionId  +
+                    "&categoryId=" + categoryId + "&type=" + type;
+
+            System.out.println("getRecordUserActionsrequest :   " + url + "     productList  :" + productList);
+
+            response = new SendRecommadedProductRequestToServer(url, productList).execute().get();
+            System.out.println("response:   " + response);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+        return response;
     }
 
 
-    public static class RetrofitAyncGetSimilarProducts extends AsyncTask<Void, Void, Response> {
-        String clientId, productId, categoryId, userId;
+    //////////////////SENDING REQUEST TO THE SERVER//////////////
 
-        public RetrofitAyncGetSimilarProducts(String productId, String clientId, String categoryId, String userId) {
-            this.clientId = clientId;
-            this.productId = productId;
-            this.categoryId = categoryId;
-            this.userId = userId;
+    public class SendRecommadedProductRequestToServer extends AsyncTask<Void, Void, JSONObject> {
+        String url;
+        JSONObject productList;
+        JSONObject jsonResponse = null;
+
+        public SendRecommadedProductRequestToServer(String url, JSONObject productList) {
+            this.url = url;
+            this.productList = productList;
         }
 
         protected void onPreExecute() {
         }
 
         @Override
-        protected Response doInBackground(Void... params) {
-            Response responsee = null;
+        protected JSONObject doInBackground(Void... params) {
+            Response response = null;
+            Retroclient retroclient = null;
+            materiall service = null;
+            Call call = null;
+
             retroclient = new Retroclient();
             service = retroclient.getClient().create(materiall.class);
             try {
-                System.out.println("search_Response_getProducts  1st: " + "  do background ");
 
-                if (count != -1 && page != -1 && template != "") {
-                    call = service.GetSimilarProductsInterface(productId, clientId, categoryId, userId, count, page, template);
-                } else if (count != -1 && page == -1 && template != "") {
-                    call = service.GetSimilarProductsInterface(productId, clientId, categoryId, userId, count, null, template);
-                } else if (count == -1 && page != -1 && template != "") {
-                    call = service.GetSimilarProductsInterface(productId, clientId, categoryId, userId, null, page, template);
+                if (productList != null && productList.length() > 0) {
+                    RequestBody bodyRequest = RequestBody.create(MediaType.parse("application/json"), productList.toString());
+                    call = service.productListingInterface(url, bodyRequest);
+                } else {
+                    call = service.materiallInterface(url);
+                }
+                response = call.execute();
 
-                } else if (count != -1 && page != -1 && template == "") {
-                    call = service.GetSimilarProductsInterface(productId, clientId, categoryId, userId, count, page, null);
+                System.out.println("serverResponse  :" + response);
 
-                } else if (count == -1 && page == -1 && template == "") {
-                    call = service.GetSimilarProductsInterface(productId, clientId, categoryId, userId, null, null, null);
+                if (response != null) {
+
+                    ////////converting the server response to json//////////////////
+                    String jsonString = new Gson().toJson(response.body());
+                    try {
+                        jsonResponse = new JSONObject(jsonString);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-                responsee = call.execute();
-                System.out.println("search_Response_getProducts  :2nd: " + "   " + responsee);
-
-                responseStr = new Gson().toJson(responsee.body());
-                try {
-                    result_json_Obj = new JSONObject(responseStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("search_Response result :  " + result_json_Obj);
-                return responsee;
+                return jsonResponse;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            return null;
+            System.out.println("jsonResponse  :" + jsonResponse);
+            return jsonResponse;
         }
 
         @Override
-        protected void onPostExecute(Response result) {
-            super.onPostExecute(result);
-        }
-    }
-
-
-    public static class EventInterface extends AsyncTask<Void, Void, Response> {
-        String userId, clientId, sessionId, categoryId, type, id;
-        String body;
-
-        public EventInterface(String userId, String clientId, String sessionId, String categoryId, String type, String id) {
-            this.userId = userId;
-            this.clientId = clientId;
-            this.sessionId = sessionId;
-            this.categoryId = categoryId;
-            this.type = type;
-            this.id = id;
-        }
-
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected Response doInBackground(Void... params) {
-            Response responsee = null;
-            retroclient = new Retroclient();
-            service = retroclient.getClient().create(materiall.class);
-            try {
-                System.out.println("search_Response_Event  1st: " + "  do background ");
-
-                call = service.EventInterface(userId, clientId, sessionId, categoryId, type, new EventModel(new ArrayList<products>(Integer.parseInt(id))));
-                responsee = call.execute();
-                System.out.println("search_Response_Event  :2nd: " + "   " + responsee);
-
-                responseStr = new Gson().toJson(responsee.body());
-                try {
-                    result_json_Obj = new JSONObject(responseStr);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                System.out.println("search_Response_result_Event :  " + result_json_Obj);
-                return responsee;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Response result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(JSONObject jsonResponse) {
+            super.onPostExecute(jsonResponse);
         }
     }
 

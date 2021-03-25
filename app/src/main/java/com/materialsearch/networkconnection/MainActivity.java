@@ -36,6 +36,7 @@ public class MainActivity extends Activity {
                     productRecommendationSearch1.setPage(1);
                     productRecommendationSearch1.setFilter("color_matFilter:Red OR color_matFilter:Blue");
 
+
                     JSONObject result = productRecommendationSearch1.getRecommendedProductCategory("apparel-demo", "u500", "Western Wear");
                     if (result != null) {
                         System.out.println("productCategoryresponse :   " + result);
@@ -46,6 +47,8 @@ public class MainActivity extends Activity {
 
                 ////////////getRecommendedProductSearch////////////////
                 try {
+
+
 
                     ProductRecommendationSearch productRecommendationSearch2 = new ProductRecommendationSearch();
 
@@ -66,12 +69,12 @@ public class MainActivity extends Activity {
 
                 try {
                     ProductRecommendationSearch productRecommendationSearch3 = new ProductRecommendationSearch();
-
                     productRecommendationSearch3.setCount(5);
                     productRecommendationSearch3.setPage(1);
                     productRecommendationSearch3.setSessionId("s-745gh41");
                     productRecommendationSearch3.setTemplate("default");
                     productRecommendationSearch3.setFilter("color_matFilter:Red OR color_matFilter:Blue");
+
 
                     JSONObject result = productRecommendationSearch3.getRecommendedSimilarProducts("1602", "apparel-demo", "Western Wear", "48042");
                     if (result != null) {
@@ -86,7 +89,6 @@ public class MainActivity extends Activity {
                 try {
 
                     ProductRecommendationSearch productRecommendationSearch4 = new ProductRecommendationSearch();
-
                     JSONObject productList = new JSONObject();
                     JSONArray jsonArray = new JSONArray();
                     JSONObject obj1 = new JSONObject();
@@ -94,7 +96,6 @@ public class MainActivity extends Activity {
                     JSONObject obj3 = new JSONObject();
                     JSONObject obj4 = new JSONObject();
                     try {
-
                         obj1.put("id", "1801");
                         obj2.put("id", "1663");
                         obj3.put("id", "2571");
@@ -109,7 +110,7 @@ public class MainActivity extends Activity {
                     productList.put("products", jsonArray);
                     System.out.println("jsonObjectResponse :   " + " " + productList);
 
-                    JSONObject result = productRecommendationSearch4.getRecordUserActions("48042", "apparel-demo", "s1", "Western Wear", "seen", productList);
+                    JSONObject result = productRecommendationSearch4.recordUserActions("48042", "apparel-demo", "s1", "Western Wear", "seen", productList);
                     if (result != null) {
                         System.out.println("getRecordUserActionsResponse :   " + result);
                     }

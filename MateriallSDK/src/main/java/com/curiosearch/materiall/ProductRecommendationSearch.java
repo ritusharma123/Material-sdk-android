@@ -190,7 +190,7 @@ public class ProductRecommendationSearch {
 
     //////////////////////RecordUserActions API INTERFACE////////////
 
-    public JSONObject getRecordUserActions(String userId, String clientId, String sessionId, String categoryId, String type, JSONObject productList) {
+    public JSONObject recordUserActions(String userId, String clientId, String sessionId, String categoryId, String type, JSONObject productList) {
         JSONObject response = null;
         try {
             String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&clientId=" + clientId + "&sessionId=" + sessionId  +

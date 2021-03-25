@@ -12,11 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Retroclient
 {
     public Retrofit retrofit ;
-    Context context;
-//    public static final String App_URL = "http://qa1.astronethra.com:8080/Astro/";
-//    public static final String App_URL = "http://demo.materiall.com/";
     public static final String App_URL = BuildConfig.BASE_URL;
-
 
     public Retrofit getClient() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
@@ -26,7 +22,6 @@ public class Retroclient
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
 
-        //setProperties();
         retrofit = new Retrofit.Builder()
                 .baseUrl(App_URL)
                 .addConverterFactory(GsonConverterFactory.create())

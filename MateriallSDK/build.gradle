@@ -11,7 +11,6 @@ android {
     buildToolsVersion "30.0.2"
 
 
-
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 30
@@ -24,38 +23,26 @@ android {
         consumerProguardFiles "consumer-rules.pro"
     }
 
-//    buildTypes {
-//        release {
-//            signingConfig signingConfigs.release
-//            minifyEnabled true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//
-//        }
-//    }
 
     buildTypes {
         debug {
-           // signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
         }
         staging {
-           // signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
 
         }
         release {
-           // signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
 
         }
     }
-//
 
 
 
@@ -86,25 +73,3 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 }
-
-//
-//project.afterEvaluate {
-//    def isAndroidLibraryProject = project.plugins.hasPlugin('com.android.library')
-//    if(isAndroidLibraryProject) {
-//        task copyDeps(type:Copy) {
-//            from configurations.includeJars {
-//                include '**/*.jar'
-//            }
-//            into "./build/intermediates/packaged-classes/release/libs" // this folder gets packaged inside the AAR
-//        }
-//        mergeReleaseJniLibFolders.dependsOn copyDeps // only this stage worked for me - neither earlier, nor later
-//
-//        task copyDebugDeps(type:Copy) {
-//            from configurations.includeJars {
-//                include '**/*.jar'
-//            }
-//            into "./build/intermediates/packaged-classes/debug/libs"
-//        }
-//        //mergeDebugJniLibFolders.dependsOn copyDebugDeps
-//    }
-//}

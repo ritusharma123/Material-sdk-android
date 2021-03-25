@@ -4,11 +4,6 @@
     tools:ignore="MissingDefaultResource">
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">qa1.astronethra.in</domain>
-        <domain includeSubdomains="true">qa1.astronethra.com</domain>
-        <domain includeSubdomains="true">web.astronethra.in</domain>
-        <domain includeSubdomains="true">web.astronethra.com</domain>
-
+        <domain includeSubdomains="true">demo.materiall.com</domain>
     </domain-config>
-
 </network-security-config>

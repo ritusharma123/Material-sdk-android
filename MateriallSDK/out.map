@@ -1,6 +1,6 @@
 # compiler: R8
 # compiler_version: 2.1.86
-# pg_map_id: 114859a
+# pg_map_id: fc1c73d
 # common_typos_disable
 com.curiosearch.materiall.BuildConfig -> com.curiosearch.materiall.BuildConfig:
     1:1:void <init>():6:6 -> <init>
@@ -19,11 +19,11 @@ com.curiosearch.materiall.ProductRecommendationSearch -> com.curiosearch.materia
     1:31:org.json.JSONObject getRecommendedProductCategory(java.lang.String,java.lang.String,java.lang.String):92:122 -> getRecommendedProductCategory
     1:20:org.json.JSONObject getRecommendedProductSearch(java.lang.String,java.lang.String,java.lang.String,int):133:152 -> getRecommendedProductSearch
     1:23:org.json.JSONObject getRecommendedSimilarProducts(java.lang.String,java.lang.String,java.lang.String,java.lang.String):163:185 -> getRecommendedSimilarProducts
-    1:10:org.json.JSONObject getRecordUserActions(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,org.json.JSONObject):196:205 -> getRecordUserActions
     1:1:java.lang.String getSessionId():40:40 -> getSessionId
     1:1:java.lang.String getSortBy():72:72 -> getSortBy
     1:1:java.lang.String getTemplate():64:64 -> getTemplate
     1:1:boolean isMateriall():32:32 -> isMateriall
+    1:10:org.json.JSONObject recordUserActions(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,org.json.JSONObject):196:205 -> recordUserActions
     1:1:void setCount(int):84:84 -> setCount
     1:1:void setFilter(java.lang.String):60:60 -> setFilter
     1:1:void setMateriall(boolean):36:36 -> setMateriall
@@ -43,6 +43,6 @@ com.curiosearch.materiall.ProductRecommendationSearch$SendRecommadedProductReque
     2:2:void onPostExecute(org.json.JSONObject):269:269 -> onPostExecute
 com.curiosearch.materiall.Retroclient -> com.curiosearch.materiall.Retroclient:
     1:1:void <init>():12:12 -> <init>
-    1:13:retrofit2.Retrofit getClient():20:32 -> getClient
+    1:12:retrofit2.Retrofit getClient():18:29 -> getClient
 com.curiosearch.materiall.service.Config -> com.curiosearch.materiall.service.Config:
     1:1:void <init>():3:3 -> <init>

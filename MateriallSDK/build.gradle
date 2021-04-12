@@ -27,18 +27,18 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
+            buildConfigField "String", "BASE_URL", '"https://blibli-test.curiosearch.in/"'
         }
         staging {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
+            buildConfigField "String", "BASE_URL", '"https://blibli-test.curiosearch.in/"'
 
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"http://demo.materiall.com/"'
+            buildConfigField "String", "BASE_URL", '"https://blibli-test.curiosearch.in/"'
 
         }
     }

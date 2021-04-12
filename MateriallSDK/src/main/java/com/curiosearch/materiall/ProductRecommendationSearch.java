@@ -20,37 +20,38 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class ProductRecommendationSearch {
-    private boolean materiall = true;
     private String template = "";
     private String sortBy = "";
     private String filter = "";
     private int count = -1;
-    private int page = -1;
-    private String sessionId = "";
+    private String categoryId = "";
+    private String searchq = "";
+    private float ratings = (float) -1.0;
 
-    public boolean isMateriall() {
-        return materiall;
+    public float getRatings() {
+        return ratings;
     }
 
-    public void setMateriall(boolean materiall) {
-        this.materiall = materiall;
+    public void setRatings(float ratings) {
+        this.ratings = ratings;
     }
 
-    public String getSessionId() {
-        return sessionId;
+    public String getCategoryId() {
+        return categoryId;
     }
 
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public int getPage() {
-        return page;
+    public String getSearchq() {
+        return searchq;
     }
 
-    public void setPage(int page) {
-        this.page = page;
+    public void setSearchq(String searchq) {
+        this.searchq = searchq;
     }
+
 
     public String getFilter() {
         return filter;
@@ -86,20 +87,16 @@ public class ProductRecommendationSearch {
 
     //////////////////////ProductCategory API INTERFACE////////////
 
-    public JSONObject getRecommendedProductCategory(String clientId, String userId, String categoryId) throws Exception{
+    public JSONObject getRecommendedProductCategory(String clientId, String userId, String categoryId, String sessionId, String page, String pageType) throws Exception{
         JSONObject response = null;
         try {
-            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId +
+            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId
+                    +"&sessionId=" + sessionId +"&page=" + page +"&pageType=" + pageType +
                     "&categoryId=" + categoryId;
+
 
             if (count != -1) {
                 url = url + "&count=" + count;
-            }
-            if (page != -1) {
-                url = url + "&page=" + page;
-            }
-            if (sessionId != "") {
-                url = url + "&sessionId=" + sessionId;
             }
             if (sortBy != "") {
                 url = url + "&sortBy=" + sortBy;
@@ -107,9 +104,6 @@ public class ProductRecommendationSearch {
             if (template != "") {
                 url = url + "&template=" + template;
             }
-
-                url = url + "&material=" + materiall;
-
             if (filter != "") {
                 url = url + "&filter=" + filter;
             }
@@ -124,77 +118,27 @@ public class ProductRecommendationSearch {
         return response;
     }
 
-    //////////////////////ProductSearch API INTERFACE////////////
-
-    public JSONObject getRecommendedProductSearch(String clientId, String userId, String searchq, int page) {
-        JSONObject response = null;
-
-        try {
-            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId + "&searchq=" + searchq +
-                    "&page=" + page;
-            if (count != -1) {
-                url = url + "&count=" + count;
-            }
-            if (sortBy != "") {
-                url = url + "&sortBy=" + sortBy;
-            }
-            if (template != "") {
-                url = url + "&template=" + template;
-            }
-            if (filter != "") {
-                url = url + "&filter=" + filter;
-            }
-
-            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
-            System.out.println("response:   " + response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-
-    //////////////////////SimilarProducts API INTERFACE////////////
-
-    public JSONObject getRecommendedSimilarProducts(String productId, String clientId, String categoryId, String userId) {
-        JSONObject response = null;
-        try {
-            String url = Config.BaseUrl + "api/product/" + productId + "/similar/recommendations?&clientId=" + clientId + "&userId=" + userId +
-                    "&categoryId=" + categoryId;
-            if (count != -1) {
-                url = url + "&count=" + count;
-            }
-            if (page != -1) {
-                url = url + "&page=" + page;
-            }
-            if (sessionId != "") {
-                url = url + "&sessionId=" + sessionId;
-            }
-            if (template != "") {
-                url = url + "&template=" + template;
-            }
-            if (filter != "") {
-                url = url + "&filter=" + filter;
-            }
-
-            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
-            System.out.println("response:   " + response);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return response;
-    }
-
     //////////////////////RecordUserActions API INTERFACE////////////
 
-    public JSONObject recordUserActions(String userId, String clientId, String sessionId, String categoryId, String type, JSONObject productList) {
+    public JSONObject recordUserActions(String userId, String type, String clientId, String sessionId,
+                                        String deviceType, String deviceOS, String browser, String page, String pageType, JSONObject productList) {
         JSONObject response = null;
         try {
-            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&clientId=" + clientId + "&sessionId=" + sessionId  +
-                    "&categoryId=" + categoryId + "&type=" + type;
+            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&type=" + type + "&clientId=" + clientId + "&sessionId=" + sessionId
+                    + "&deviceType=" + deviceType + "&deviceOS=" + deviceOS+ "&browser=" + browser
+                    + "&page=" + page+ "&pageType=" + pageType ;
+
+             if (pageType.equals("categoryPage") && categoryId !="") {
+                 url = url + "&categoryId=" + categoryId;
+             }
+
+               if (pageType.equals("searchPage") && searchq != "") {
+                   url = url + "&searchq=" + searchq;
+               }
+             
+                 if (type.equals("rate") && ratings != -1.0) {
+                     url = url + "&ratings=" + ratings;
+                 }
 
             System.out.println("getRecordUserActionsrequest :   " + url + "     productList  :" + productList);
 

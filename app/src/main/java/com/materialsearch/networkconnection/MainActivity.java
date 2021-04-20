@@ -29,12 +29,13 @@ public class MainActivity extends Activity {
                     ProductRecommendationSearch productRecommendationSearch1 = new ProductRecommendationSearch();
 
                     productRecommendationSearch1.setCount(8);
-                    productRecommendationSearch1.setTemplate("default");
                     productRecommendationSearch1.setSortBy("Relevance");
+                    productRecommendationSearch1.setCategoryId("54817");
+                    productRecommendationSearch1.setSearchq("polycotton t shirt");
+                    productRecommendationSearch1.setXRequestID("123");
                     productRecommendationSearch1.setFilter("color_matFilter:Red OR color_matFilter:Blue");
 
-
-                    JSONObject result = productRecommendationSearch1.getRecommendedProductCategory("blibli-test", "xyz-xyz-xyz", "54817", "ses-xuz-abc",  "2", "categoryPage");
+                    JSONObject result = productRecommendationSearch1.getRecommendedProductCategory("blibli-test", "xyz-xyz-xyz", "categoryPage", "ses-xuz-abc", "blibli", "2");
                     if (result != null) {
                         System.out.println("productCategoryresponse :   " + result);
                     }
@@ -48,9 +49,10 @@ public class MainActivity extends Activity {
 
                     ProductRecommendationSearch productRecommendationSearch2 = new ProductRecommendationSearch();
 
+                    productRecommendationSearch2.setXRequestID("123");
                     productRecommendationSearch2.setCategoryId("54817");
                     productRecommendationSearch2.setSearchq("Pakaian dresses");
-                    productRecommendationSearch2.setRatings((float) 4.5);
+                    productRecommendationSearch2.setRatings(4.5f);
 
                     JSONObject productList = new JSONObject();
                     JSONArray jsonArray = new JSONArray();
@@ -85,7 +87,7 @@ public class MainActivity extends Activity {
                     productList.put("products", jsonArray);
                     System.out.println("jsonObjectResponse :   " + " " + productList);
 
-                    JSONObject result = productRecommendationSearch2.recordUserActions("xyz-xyz-xyz", "rate", "blibli-test", "ses-xuz-abc",  "desktop", "linux", "Chrome","3", "categoryPage", productList);
+                    JSONObject result = productRecommendationSearch2.recordUserActions( "xyz-xyz-xyz", "blibli-test", "ses-xuz-abc", "rate","desktop", "linux", "Chrome", "searchPage", "3", productList);
                     if (result != null) {
                         System.out.println("getRecordUserActionsResponse :   " + result);
                     }

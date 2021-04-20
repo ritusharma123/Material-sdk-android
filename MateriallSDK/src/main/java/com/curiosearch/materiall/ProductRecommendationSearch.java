@@ -1,6 +1,10 @@
 package com.curiosearch.materiall;
 
 import android.os.AsyncTask;
+import android.os.Build;
+import android.util.Base64;
+
+import androidx.annotation.RequiresApi;
 
 import com.curiosearch.materiall.service.Config;
 import com.google.gson.Gson;
@@ -13,20 +17,24 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Response;
+import retrofit2.http.Header;
 
 public class ProductRecommendationSearch {
-    private String template = "";
     private String sortBy = "";
     private String filter = "";
     private int count = -1;
     private String categoryId = "";
     private String searchq = "";
-    private float ratings = (float) -1.0;
+    private String XRequestID = "";
+    private float ratings = -1.0f;
 
     public float getRatings() {
         return ratings;
@@ -41,7 +49,10 @@ public class ProductRecommendationSearch {
     }
 
     public void setCategoryId(String categoryId) {
-        this.categoryId = categoryId;
+        if (categoryId != null) {
+            this.categoryId = categoryId.trim();
+        }
+
     }
 
     public String getSearchq() {
@@ -49,9 +60,10 @@ public class ProductRecommendationSearch {
     }
 
     public void setSearchq(String searchq) {
-        this.searchq = searchq;
+        if (searchq != null) {
+            this.searchq = searchq.trim();
+        }
     }
-
 
     public String getFilter() {
         return filter;
@@ -59,14 +71,6 @@ public class ProductRecommendationSearch {
 
     public void setFilter(String filter) {
         this.filter = filter;
-    }
-
-    public String getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(String template) {
-        this.template = template;
     }
 
     public String getSortBy() {
@@ -85,15 +89,24 @@ public class ProductRecommendationSearch {
         this.count = count;
     }
 
+    public String getXRequestID() {
+        return XRequestID;
+    }
+
+    public void setXRequestID(String XRequestID) {
+        if (XRequestID != null) {
+            this.XRequestID = XRequestID;
+        }
+    }
+
     //////////////////////ProductCategory API INTERFACE////////////
 
-    public JSONObject getRecommendedProductCategory(String clientId, String userId, String categoryId, String sessionId, String page, String pageType) throws Exception{
+    public JSONObject getRecommendedProductCategory(String clientId, String userId, String pageType, String sessionId, String template, String page) throws Exception {
         JSONObject response = null;
         try {
             String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId
-                    +"&sessionId=" + sessionId +"&page=" + page +"&pageType=" + pageType +
-                    "&categoryId=" + categoryId;
-
+                    + "&sessionId=" + sessionId + "&template=" + template + "&page=" + page + "&pageType=" + pageType;
+            String xRequestID = "";
 
             if (count != -1) {
                 url = url + "&count=" + count;
@@ -101,15 +114,31 @@ public class ProductRecommendationSearch {
             if (sortBy != "") {
                 url = url + "&sortBy=" + sortBy;
             }
-            if (template != "") {
-                url = url + "&template=" + template;
-            }
+
             if (filter != "") {
                 url = url + "&filter=" + filter;
             }
 
-            response = new SendRecommadedProductRequestToServer(url, null).execute().get();
-            System.out.println("response:   " + response);
+            if (XRequestID != "") {
+                xRequestID = XRequestID;
+            }
+
+            if (pageType.equals("categoryPage") && !categoryId.isEmpty()) {
+                url = url + "&categoryId=" + categoryId;
+            }
+
+            if (pageType.equals("searchPage") && !searchq.isEmpty()) {
+                url = url + "&searchq=" + searchq;
+            }
+
+
+            String authorization = Config.getAuthorization(clientId);
+            System.out.println("authorization_response:   " + authorization);
+
+            if (authorization != null && !authorization.isEmpty()) {
+                response = new SendRecommadedProductRequestToServer(authorization, xRequestID, url, null).execute().get();
+                System.out.println("response:   " + response);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,30 +149,40 @@ public class ProductRecommendationSearch {
 
     //////////////////////RecordUserActions API INTERFACE////////////
 
-    public JSONObject recordUserActions(String userId, String type, String clientId, String sessionId,
-                                        String deviceType, String deviceOS, String browser, String page, String pageType, JSONObject productList) {
+    public JSONObject recordUserActions(String userId, String clientID, String sessionId, String type,
+                                        String deviceType, String deviceOS, String browser, String pageType, String page, JSONObject productList) {
         JSONObject response = null;
         try {
-            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&type=" + type + "&clientId=" + clientId + "&sessionId=" + sessionId
-                    + "&deviceType=" + deviceType + "&deviceOS=" + deviceOS+ "&browser=" + browser
-                    + "&page=" + page+ "&pageType=" + pageType ;
+            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&type=" + type + "&clientId=" + clientID + "&sessionId=" + sessionId
+                    + "&deviceType=" + deviceType + "&deviceOS=" + deviceOS + "&browser=" + browser
+                    + "&page=" + page + "&pageType=" + pageType;
+            String xRequestID = "";
 
-             if (pageType.equals("categoryPage") && categoryId !="") {
-                 url = url + "&categoryId=" + categoryId;
-             }
+            if (pageType.equals("categoryPage") && !categoryId.isEmpty()) {
+                url = url + "&categoryId=" + categoryId;
+            }
 
-               if (pageType.equals("searchPage") && searchq != "") {
-                   url = url + "&searchq=" + searchq;
-               }
-             
-                 if (type.equals("rate") && ratings != -1.0) {
-                     url = url + "&ratings=" + ratings;
-                 }
+            if (pageType.equals("searchPage") && !searchq.isEmpty()) {
+                url = url + "&searchq=" + searchq;
+            }
+
+            if (type.equals("rate") && ratings != -1.0f) {
+                url = url + "&ratings=" + ratings;
+            }
+
+            if (XRequestID != "") {
+                xRequestID = XRequestID;
+            }
 
             System.out.println("getRecordUserActionsrequest :   " + url + "     productList  :" + productList);
 
-            response = new SendRecommadedProductRequestToServer(url, productList).execute().get();
-            System.out.println("response:   " + response);
+            String authorization = Config.getAuthorization(clientID);
+            System.out.println("authorization_response:   " + authorization);
+
+            if (authorization != null && !authorization.isEmpty()) {
+                response = new SendRecommadedProductRequestToServer(authorization, xRequestID, url, productList).execute().get();
+                System.out.println("response:   " + response);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -157,12 +196,16 @@ public class ProductRecommendationSearch {
 
     public class SendRecommadedProductRequestToServer extends AsyncTask<Void, Void, JSONObject> {
         String url;
+        String authorization;
+        String request_id;
         JSONObject productList;
         JSONObject jsonResponse = null;
 
-        public SendRecommadedProductRequestToServer(String url, JSONObject productList) {
+        public SendRecommadedProductRequestToServer(String authorization, String request_id, String url, JSONObject productList) {
             this.url = url;
             this.productList = productList;
+            this.authorization = authorization;
+            this.request_id = request_id;
         }
 
         protected void onPreExecute() {
@@ -180,10 +223,12 @@ public class ProductRecommendationSearch {
             try {
 
                 if (productList != null && productList.length() > 0) {
+
+
                     RequestBody bodyRequest = RequestBody.create(MediaType.parse("application/json"), productList.toString());
-                    call = service.productListingInterface(url, bodyRequest);
+                    call = service.productListingInterface(authorization, request_id, url, bodyRequest);
                 } else {
-                    call = service.materiallInterface(url);
+                    call = service.materiallInterface(authorization, request_id, url);
                 }
                 response = call.execute();
 
@@ -198,6 +243,9 @@ public class ProductRecommendationSearch {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                } else if (response.errorBody() != null) {
+                    System.out.println("jsonResponse  :" + response.message());
+
                 }
 
                 return jsonResponse;
@@ -213,6 +261,7 @@ public class ProductRecommendationSearch {
             super.onPostExecute(jsonResponse);
         }
     }
+
 
 }
 

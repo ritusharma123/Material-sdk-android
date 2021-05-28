@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public  class Config {
 
-    public static String BaseUrl = "https://staging.materiall.curiosearch.in/";
+   // public static String BaseUrl = "https://blibli-qa.curiosearch.in/";
 
 
     public static String getAuthorization(String clientId)
@@ -18,7 +18,7 @@ public  class Config {
         String authorization = null;
         try
         {
-            String epochTime = String.valueOf(TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()));
+            String epochTime = String.valueOf(System.currentTimeMillis());
             System.out.println(epochTime);
             String epochTimetext = "cid_" + clientId + "/ct_" + epochTime;
             byte[] encrpt = epochTimetext.getBytes("UTF-8");

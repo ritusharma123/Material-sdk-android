@@ -104,7 +104,7 @@ public class ProductRecommendationSearch {
     public JSONObject getRecommendedProductCategory(String clientId, String userId, String pageType, String sessionId, String template, String page) throws Exception {
         JSONObject response = null;
         try {
-            String url = Config.BaseUrl + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId
+            String url = Retroclient.App_URL + "api/products/recommendation?&clientId=" + clientId + "&userId=" + userId
                     + "&sessionId=" + sessionId + "&template=" + template + "&page=" + page + "&pageType=" + pageType;
             String xRequestID = "";
 
@@ -153,7 +153,7 @@ public class ProductRecommendationSearch {
                                         String deviceType, String deviceOS, String browser, String pageType, String page, JSONObject productList) {
         JSONObject response = null;
         try {
-            String url = Config.BaseUrl + "api/user/" + userId + "/event?" + "&type=" + type + "&clientId=" + clientID + "&sessionId=" + sessionId
+            String url = Retroclient.App_URL + "api/user/" + userId + "/event?" + "&type=" + type + "&clientId=" + clientID + "&sessionId=" + sessionId
                     + "&deviceType=" + deviceType + "&deviceOS=" + deviceOS + "&browser=" + browser
                     + "&page=" + page + "&pageType=" + pageType;
             String xRequestID = "";
@@ -233,26 +233,32 @@ public class ProductRecommendationSearch {
                 response = call.execute();
 
                 System.out.println("serverResponse  :" + response);
+                System.out.println("serverResponse Code :" + response.code());
 
                 if (response != null) {
-
                     ////////converting the server response to json//////////////////
-                    String jsonString = new Gson().toJson(response.body());
-                    try {
-                        jsonResponse = new JSONObject(jsonString);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                    if(response.code()==200) {
+                        String jsonString = new Gson().toJson(response.body());
+                        try {
+                            jsonResponse = new JSONObject(jsonString);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }else  {
+                        try {
+                            jsonResponse = new JSONObject(response.errorBody().string());
+                            System.out.println("Server errorResponse :" + jsonResponse);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } else if (response.errorBody() != null) {
-                    System.out.println("jsonResponse  :" + response.message());
-
                 }
 
                 return jsonResponse;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            System.out.println("jsonResponse  :" + jsonResponse);
+            System.out.println("Server Response : " + jsonResponse);
             return jsonResponse;
         }
 

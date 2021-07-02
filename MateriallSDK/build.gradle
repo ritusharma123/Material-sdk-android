@@ -38,7 +38,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"https://blibli-qa.curiosearch.in/"'
+            buildConfigField "String", "BASE_URL", '"https://api.blibli.curiosearch.in/"'
 
         }
     }

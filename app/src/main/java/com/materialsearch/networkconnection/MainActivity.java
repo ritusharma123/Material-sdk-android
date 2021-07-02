@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
                     productRecommendationSearch1.setXRequestID("123");
                     productRecommendationSearch1.setFilter("color_matFilter:Red OR color_matFilter:Blue");
 
-                    JSONObject result = productRecommendationSearch1.getRecommendedProductCategory("blibli-test", "xyz-xyz-xyz", "categoryPage", "ses-xuz-abc", "blibli", "2");
+                    JSONObject result = productRecommendationSearch1.getRecommendedProductCategory("blibli-client2", "xyz-xyz-xyz", "categoryPage", "ses-xuz-abc", "blibli", "2");
                     if (result != null) {
                         System.out.println("productCategoryresponse :   " + result);
                     }
@@ -87,7 +87,7 @@ public class MainActivity extends Activity {
                     productList.put("products", jsonArray);
                     System.out.println("jsonObjectResponse :   " + " " + productList);
 
-                    JSONObject result = productRecommendationSearch2.recordUserActions( "xyz-xyz-xyz", "blibli-test", "ses-xuz-abc", "rate","desktop", "linux", "Chrome", "searchPage", "3", productList);
+                    JSONObject result = productRecommendationSearch2.recordUserActions( "xyz-xyz-xyz", "blibli-client2", "ses-xuz-abc", "rate","desktop", "linux", "Chrome", "searchPage", "3", productList);
                     if (result != null) {
                         System.out.println("getRecordUserActionsResponse :   " + result);
                     }

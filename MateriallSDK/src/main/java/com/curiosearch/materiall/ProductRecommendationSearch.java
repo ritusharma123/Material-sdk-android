@@ -111,15 +111,15 @@ public class ProductRecommendationSearch {
             if (count != -1) {
                 url = url + "&count=" + count;
             }
-            if (sortBy != "") {
+            if (!sortBy.equals("")) {
                 url = url + "&sortBy=" + sortBy;
             }
 
-            if (filter != "") {
+            if (!filter.equals("")) {
                 url = url + "&filter=" + filter;
             }
 
-            if (XRequestID != "") {
+            if (!XRequestID.equals("")) {
                 xRequestID = XRequestID;
             }
 

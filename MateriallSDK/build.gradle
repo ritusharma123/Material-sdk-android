@@ -27,7 +27,7 @@ android {
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "BASE_URL", '"https://blibli-test.curiosearch.in/"'
+            buildConfigField "String", "BASE_URL", '"https://api.blibli-staging.curiosearch.in/"'
         }
         staging {
             minifyEnabled false

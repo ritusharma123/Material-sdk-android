@@ -18,7 +18,10 @@ public  class Config {
         String authorization = null;
         try
         {
-            String epochTime = String.valueOf(System.currentTimeMillis());
+            long epochTimeMillis = new TimeService().getCurrentEpochTimeMillis();
+            System.out.println("UNIXXXXXX TIME : " + epochTimeMillis);
+            String epochTime = String.valueOf(epochTimeMillis);
+            System.out.println("Epoch "+epochTime);
             System.out.println(epochTime);
             String epochTimetext = "cid_" + clientId + "/ct_" + epochTime;
             byte[] encrpt = epochTimetext.getBytes("UTF-8");
